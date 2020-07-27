@@ -1,0 +1,25 @@
+{
+    // 关闭eslint自动修复（可以选择性开启）
+    "eslint.autoFixOnSave": true,
+    // lint vue文件
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        {
+            "language": "html",
+            "autoFix": true
+        },
+        {
+            "language": "vue",
+            "autoFix": true
+        }
+    ],
+    // 关闭保存格式化，因为prettier有一些自己的规则，同时他应用了所有文件，比如ejs模板，所有强烈强烈强烈不建议使用
+    "editor.formatOnSave": false,
+    // 格式化style文件，以stylelint配置优先
+    "prettier.stylelintIntegration": true,
+    // 格式化js文件，以eslint配置优先
+    "prettier.eslintIntegration": true,
+    // 每行字符数量
+    "prettier.printWidth": 160
+}
