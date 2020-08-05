@@ -4,9 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "build:yup": "rollup node_modules/yup -o src/moulds/yup.js -p @rollup/plugin-node-resolve,@rollup/plugin-commonjs,rollup-plugin-terser -f umd -n 'yup'"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "rollup": "^2.23.0",
+    "rollup-plugin-terser": "^6.1.0"
   }
 }

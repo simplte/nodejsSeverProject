@@ -1,3 +1,5 @@
+import './moulds/ShopForm.js';
+const { createShopFormSchema } = window.moulds;
 export async function refreshShopList() {
     const res = await fetch('/api/shop');
     const { data: shopList } = await res.json();
@@ -8,6 +10,7 @@ export async function refreshShopList() {
     <input type="text" placeholder="输入新的店铺名称" />
     <a href="#" data-type="modify">确认修改</a>
     <a href="#" data-type="remove">删除店铺</a>
+    <div class="error"></div>
   </li>`
     );
     document.querySelector('#root').innerHTML = `
@@ -32,6 +35,13 @@ export async function refreshShopList() {
   export async function modifyShopInfo(e) {
     const shopId = e.target.parentElement.dataset.shopId;
     const name = e.target.parentElement.querySelector('input').value;
+    
+    try {
+      await createShopFormSchema().validate({ name });
+    } catch ({ message }) {
+      e.target.parentElement.querySelector('.error').innerHTML = message;
+      return;
+    }
     await fetch(`/api/shop/${shopId}?name=${encodeURIComponent(name)}`, {
       method: 'PUT',
     });
