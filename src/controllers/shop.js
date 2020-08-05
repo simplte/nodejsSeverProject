@@ -3,7 +3,8 @@ const { Router } = require('express');
 const shopService = require('../services/shop');
 
 class ShopController {
-	shopService;
+  shopService;
+
   async init() {
     this.shopService = await shopService();
 
@@ -15,15 +16,14 @@ class ShopController {
     return router;
   }
 
-   async getAll(req, res) {
-	const { pageIndex, pageSize } = req.query;
-	console.log(this.shopService)
+   getAll = async (req, res) => {
+    const { pageIndex, pageSize } = req.query;
     const shopList = await this.shopService.find({ pageIndex, pageSize });
 
     res.send({ success: true, data: shopList });
   };
 
-  async getOne(req, res) {
+  getOne = async (req, res) => {
     const { shopId } = req.params;
     const shopList = await this.shopService.find({ id: shopId });
 
@@ -34,7 +34,7 @@ class ShopController {
     }
   };
 
-  async put(req, res) {
+  put = async (req, res) => {
     const { shopId } = req.params;
     const { name } = req.query;
     const shopInfo = await this.shopService.modify({
@@ -49,7 +49,7 @@ class ShopController {
     }
   };
 
-  async delete(req, res) {
+  delete = async (req, res) => {
     const { shopId } = req.params;
     const success = await this.shopService.remove({ id: shopId });
 

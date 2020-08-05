@@ -26,13 +26,13 @@ class ShopService {
 			.map(id => ({ id, ...memoryStorage[id] }));
 	}
 
-	async modify({ id, value }) {
+	async modify({ id, values }) {
 		await delay();
 		const target = memoryStorage[id];
 		if (!target) {
 			return null;
 		}
-		return Object.assign(target, value);
+		return Object.assign(target, values);
 	}
 
 	async remove({ id }) {
