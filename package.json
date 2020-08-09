@@ -8,6 +8,7 @@
     "build:yup": "rollup node_modules/yup -o src/moulds/yup.js -p @rollup/plugin-node-resolve,@rollup/plugin-commonjs,rollup-plugin-terser -f umd -n 'yup'"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "yup": "^0.29.3"
   },

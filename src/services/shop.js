@@ -17,8 +17,8 @@ class ShopService {
 	async find({ id, pageIndex = 0, pageSize = 10 }) {
 		await delay();
 		if (id) {
-            // 过滤掉假值
-            // [memoryStorage[id]].filter(function (x) { return Boolean(x); });
+			// 过滤掉假值
+			// [memoryStorage[id]].filter(function (x) { return Boolean(x); });
 			return [memoryStorage[id]].filter(Boolean);
 		}
 		return Object.keys(memoryStorage)
@@ -42,6 +42,12 @@ class ShopService {
 			return false;
 		}
 		return delete memoryStorage[id];
+	}
+
+	async create({ values }) {
+		await delay();
+		const id = String(1 + Object.keys(memoryStorage).reduce((m, id) => Math.max(m, id), -Infinity));
+		return { id, ...(memoryStorage[id] = values)}
 	}
 }
 // 单例模式
