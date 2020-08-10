@@ -76,9 +76,9 @@ export async function refreshShopList() {
     await fetch('/api/shop', {
       method: 'POST',
       headers: {
-        'Content-Type':'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: `name=${encodeURIComponent(name)}`
+      body: `name=${encodeURIComponent(name)}`,
     });
 
     await refreshShopList();

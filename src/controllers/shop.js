@@ -75,9 +75,10 @@ class ShopController {
 	post = async(req, res) => {
 		const {name } = req.body;
 		try {
-			await createShopFormSchema().validate(name);
+			await createShopFormSchema().validate({ name });
 		} catch (error) {
-			res.status(400).send({success: false, message:e.message})
+			res.status(400).send({success: false, message:error.message})
+			return;
 		}
 		const shopInfo = await this.shopService.create({values: {name}});
 		res.send({success: true, data: shopInfo})
