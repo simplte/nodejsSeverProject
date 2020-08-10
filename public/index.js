@@ -15,7 +15,14 @@ export async function refreshShopList() {
     );
     document.querySelector('#root').innerHTML = `
   <h1>店铺列表：</h1>
-  <ul class="shop-list">${htmlItems.join('')}</ul>`;
+  <ul class="shop-list">${htmlItems.join('')}</ul>
+  <h1>店铺新增：</h1>
+  <form method="post" action="/api/shop">
+    <label>新店铺的名称：</label>
+    <input type="text" name="name" />
+    <button type="submit" data-type="create">确认新增</button>
+    <span class="error"></span>
+  </form>`;
   }
   
   export async function bindShopInfoEvents() {
@@ -27,6 +34,9 @@ export async function refreshShopList() {
           break;
         case 'remove':
           await removeShopInfo(e);
+          break;
+        case 'create':
+          await createShopInfo(e);
           break;
       }
     });
@@ -51,6 +61,26 @@ export async function refreshShopList() {
   export async function removeShopInfo(e) {
     const shopId = e.target.parentElement.dataset.shopId;
     const res = await fetch(`/api/shop/${shopId}`, { method: 'DELETE' });
+    await refreshShopList();
+  }
+
+  export async function createShopInfo(e) {
+    e.preventDefault();
+    const name = e.target.parentElement.querySelector('input[name=name]').value;
+    try {
+      await createShopFormSchema().validate({name});
+    } catch (error) {
+      e.target.parentElement.querySelector('.error').innerHTML = message;
+      return;
+    }
+    await fetch('/api/shop', {
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/x-www-form-urlencoded'
+      },
+      body: `name=${encodeURIComponent(name)}`
+    });
+
     await refreshShopList();
   }
   

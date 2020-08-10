@@ -15,7 +15,7 @@ class ShopController {
 		router.get('/:shopId', this.getOne);
 		router.put('/:shopId', this.put);
 		router.delete('/:shopId', this.delete);
-		router.post('/', bodyParser.urlencoded({extended:false}, this.post));
+		router.post('/', bodyParser.urlencoded({extended:false}), this.post);
 		return router;
 	}
 
