@@ -1,3 +1,4 @@
+// yarn sequelize init   命令生成的配置
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');

@@ -1,3 +1,10 @@
+/**
+ * $ # 生成初始店铺 seed 文件 初始化数据
+ * $ yarn sequelize seed:generate --name first-shop
+ * 
+ * $ yarn sequelize db:migrate       #向数据库写入表格结构
+ * $ yarn sequelize db:seed:all     #向数据库写入初始数据
+ */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('shop', [

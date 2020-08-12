@@ -1,3 +1,7 @@
+// yarn sequelize model:generate --name Shop --attributes name:string
+/**
+ * 通过上述命令生成的shop实体
+ */
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
