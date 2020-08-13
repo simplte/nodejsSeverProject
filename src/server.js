@@ -10,9 +10,9 @@ const publicDir = resolve('public');
 const mouldsDir = resolve('src/moulds');
 
 async function bootstrap() {
+  server.use(await initMiddlewares());
   server.use(express.static(publicDir));
   server.use('/moulds', express.static(mouldsDir));
-  server.use(await initMiddlewares());
   server.use(await initControllers());
   server.use(errorHandler);
   await promisify(server.listen.bind(server, port))();
