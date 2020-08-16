@@ -1,24 +1,35 @@
 const { parse } = require('url');
+
 module.exports = function loginMiddleware(
-	homePath = '/',
-	loginPath = '/login.html',
-	whiteList = {
-		'/500.html': ['get'],
-		'/api/health': ['get'],
-		'/api/login': ['post']
-	}
+  homepagePath = '/',
+  loginPath = '/login.html',
+  whiteList = {
+    '/500.html': ['get'],
+    '/api/health': ['get'],
+    '/api/login': ['post'],
+    '/api/login/github': ['get'],
+    '/api/login/github/callback': ['get'],
+  }
 ) {
-	whiteList[loginPath] = ['get'];
-	return (req, res, next) => {
-		const { pathname } = parse(req.url);
-		if (req.session.logined && pathname == loginPath) {
-			res.redirect(homePath);
-			return;
-		}
-		if (req.session.logined || (whiteList[pathname] && whiteList[pathname].includes(req.method.toLowerCase()))) {
-            next();
-            return;
-        }
-        res.redirect(loginPath)
-	};
+  whiteList[loginPath] = ['get'];
+
+  return (req, res, next) => {
+    const { pathname } = parse(req.url);
+
+    // if (req.session.logined && pathname == loginPath) {
+    //   res.redirect(homepagePath);
+    //   return;
+    // }
+
+    if (
+      req.session.logined ||
+      (whiteList[pathname] &&
+        whiteList[pathname].includes(req.method.toLowerCase()))
+    ) {
+      next();
+      return;
+    }
+
+    res.redirect(loginPath);
+  };
 };

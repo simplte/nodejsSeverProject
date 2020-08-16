@@ -10,3 +10,11 @@
 后来还有一个问题 是报development环境的问题
 解决办法 将 git主的migrate的session 实体赋值到本项目 中 重新执行 yarn sequelize db:migrate 就好了 很奇怪
 ```
+### 认证登录时的问题
+```
+本次加入git第三方登录功能
+出现如下问题：
+注释掉 login中间件中的判断是否登录的处理则可以进入登录页面
+现有问题：一次git授权登录之后就不能再次授权登录了
+猜测原因：数据库中session表中  login为true
+```
