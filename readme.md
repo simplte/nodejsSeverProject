@@ -18,3 +18,13 @@
 现有问题：一次git授权登录之后就不能再次授权登录了
 猜测原因：数据库中session表中  login为true
 ```
+### 网络安全
+```
+1:跨站脚本攻击 xss
+2:跨站请求伪造 csrf
+yarn add escape-html csurf helmet # 本地安装 escape-html、csurf、helmet
+装helmet时候因为装的版本是4.0.0+的所以一直浏览器控制台报错
+
+本次处理都是使用cnpm装的包 现在实现了xss和csrf 防御
+
+```

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const shopService = require('../services/shop');
 const { createShopFormSchema } = require('../moulds/ShopForm.js');
 const cc = require('../utils/cc');
+const escapeHtmlInObject = require('../utils/escape-html-in-object.js')
 class ShopController {
 	shopService;
 
@@ -23,7 +24,7 @@ class ShopController {
 		const { pageIndex, pageSize } = req.query;
 		const shopList = await this.shopService.find({ pageIndex, pageSize });
 
-		res.send({ success: true, data: shopList });
+		res.send(escapeHtmlInObject({ success: true, data: shopList }));
 	});
 
 	getOne = cc(async (req, res) => {
@@ -31,7 +32,7 @@ class ShopController {
 		const shopList = await this.shopService.find({ id: shopId });
 
 		if (shopList.length) {
-			res.send({ success: true, data: shopList[0] });
+			res.send(escapeHtmlInObject({ success: true, data: shopList[0] }));
 		} else {
 			res.status(404).send({ success: false, data: null });
 		}
@@ -56,7 +57,7 @@ class ShopController {
 		});
 
 		if (shopInfo) {
-			res.send({ success: true, data: shopInfo });
+			res.send(escapeHtmlInObject({ success: true, data: shopInfo }));
 		} else {
 			res.status(404).send({ success: false, data: null });
 		}
@@ -81,7 +82,7 @@ class ShopController {
 			return;
 		}
 		const shopInfo = await this.shopService.create({ values: { name } });
-		res.send({ success: true, data: shopInfo });
+		res.send(escapeHtmlInObject({ success: true, data: shopInfo }));
 	});
 }
 

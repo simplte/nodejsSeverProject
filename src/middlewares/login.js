@@ -6,6 +6,7 @@ module.exports = function loginMiddleware(
   whiteList = {
     '/500.html': ['get'],
     '/api/health': ['get'],
+    '/api/csrf/script': ['get'],
     '/api/login': ['post'],
     '/api/login/github': ['get'],
     '/api/login/github/callback': ['get'],

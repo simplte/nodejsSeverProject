@@ -1,20 +1,19 @@
-<!-- public/index.html -->
 <html>
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="./index.css" />
+    <script  src="/api/csrf/script"></script>
   </head>
   <body>
-   <h1>It works!</h1>
-   <div id="root"></div>
-   <script type="module">
-     import './glue.js';
-     import { refreshShopList, bindShopInfoEvents } from './index.js';
-     async function bootstrap() {
-       await refreshShopList();
-       await bindShopInfoEvents();
-     }
-     bootstrap();
-   </script>
+    <div id="root"></div>
+    <script type="module">
+      import './glue.js';
+      import { refreshShopList, bindShopInfoEvents } from './index.js';
+      async function bootstrap() {
+        await refreshShopList();
+        await bindShopInfoEvents();
+      }
+      bootstrap();
+    </script>
   </body>
 </html>
