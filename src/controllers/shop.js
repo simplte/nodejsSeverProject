@@ -21,15 +21,17 @@ class ShopController {
 	}
 
 	getAll = cc(async (req, res) => {
+		const { logging } = req;
 		const { pageIndex, pageSize } = req.query;
-		const shopList = await this.shopService.find({ pageIndex, pageSize });
+		const shopList = await this.shopService.find({ pageIndex, pageSize,logging, });
 
 		res.send(escapeHtmlInObject({ success: true, data: shopList }));
 	});
 
 	getOne = cc(async (req, res) => {
+		const { logging } = req;
 		const { shopId } = req.params;
-		const shopList = await this.shopService.find({ id: shopId });
+		const shopList = await this.shopService.find({ id: shopId, logging  });
 
 		if (shopList.length) {
 			res.send(escapeHtmlInObject({ success: true, data: shopList[0] }));
@@ -39,6 +41,7 @@ class ShopController {
 	});
 
 	put = cc(async (req, res) => {
+		const { logging } = req;
 		const { shopId } = req.params;
 		const { name } = req.query;
 		try {
@@ -53,7 +56,8 @@ class ShopController {
 
 		const shopInfo = await this.shopService.modify({
 			id: shopId,
-			values: { name }
+			values: { name },
+			logging
 		});
 
 		if (shopInfo) {
@@ -64,8 +68,9 @@ class ShopController {
 	});
 
 	delete = cc(async (req, res) => {
+		const { logging } = req
 		const { shopId } = req.params;
-		const success = await this.shopService.remove({ id: shopId });
+		const success = await this.shopService.remove({ id: shopId, logging });
 
 		if (!success) {
 			res.status(404);
@@ -74,9 +79,10 @@ class ShopController {
 	});
 
 	post = cc(async (req, res) => {
+		const { logging } = req;
 		const { name } = req.body;
 		try {
-			await createShopFormSchema().validate({ name });
+			await createShopFormSchema().validate({ name , logging});
 		} catch (error) {
 			res.status(400).send({ success: false, message: error.message });
 			return;

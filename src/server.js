@@ -3,6 +3,7 @@ const { resolve } = require('path');
 const { promisify } = require('util');
 const initMiddlewares = require('./middlewares');
 const initControllers = require('./controllers');
+const logger = require('./utils/logger');
 
 const server = express();
 const port = parseInt(process.env.PORT || '9000');
@@ -16,12 +17,19 @@ async function bootstrap() {
   server.use(await initControllers());
   server.use(errorHandler);
   await promisify(server.listen.bind(server, port))();
-  console.log(`> Started on port ${port}`);
+  logger.info(`> Started on port ${port}`);
 }
 // 监听未捕获的 Promise 异常，
 // 直接退出进程
 process.on('unhandledRejection', (err) => {
-  console.error(err);
+  logger.fatal(err);
+  process.exit(1);
+});
+
+// 监听未捕获的同步异常与 Thunk 异常，
+// 输出错误日志
+process.on('uncaughtException', (err) => {
+  logger.fatal(err);
   process.exit(1);
 });
 
@@ -33,7 +41,7 @@ function errorHandler(err, req, res, next) {
   }
 
   // 打印异常
-  console.error(err);
+  req.logger.error(err);
   // 重定向到异常指引页面
   res.redirect('/500.html');
 }

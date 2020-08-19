@@ -12,13 +12,13 @@ const { Shop } = require('../models');
 class ShopService {
 	async init() {}
 
-	async find({ id, pageIndex = 0, pageSize = 10 }) {
+	async find({ id, pageIndex = 0, pageSize = 10 ,logging }) {
 		// await delay();
 		if (id) {
 			// 过滤掉假值
 			// [memoryStorage[id]].filter(function (x) { return Boolean(x); });
 			// return [memoryStorage[id]].filter(Boolean);
-			return [await Shop.findByPk(id)];
+			return [await Shop.findByPk(id, { logging })];
 		}
 		// return Object.keys(memoryStorage)
 		// 	.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
@@ -29,7 +29,7 @@ class ShopService {
 		});
 	}
 
-	async modify({ id, values }) {
+	async modify({ id, values ,logging}) {
 		// await delay();
 		// const target = memoryStorage[id];
 		const target = await Shop.findByPk(id);
@@ -38,10 +38,10 @@ class ShopService {
 		}
 		// return Object.assign(target, values);
 	    Object.assign(target, values);
-	    return await target.save();
+	    return await target.save({ logging });
 	}
 
-	async remove({ id }) {
+	async remove({ id , logging}) {
 		// await delay();
 		// const target = memoryStorage[id];
 		const target = await Shop.findByPk(id);
@@ -49,14 +49,14 @@ class ShopService {
 			return false;
 		}
 		// return delete memoryStorage[id];
-		return target.destroy();
+		return target.destroy({ logging });
 	}
 
-	async create({ values }) {
+	async create({ values, logging }) {
 		// await delay();
 		// const id = String(1 + Object.keys(memoryStorage).reduce((m, id) => Math.max(m, id), -Infinity));
 		// return { id, ...(memoryStorage[id] = values) };
-		return await Shop.create(values)
+		return await Shop.create(values, { logging })
 	}
 }
 // 单例模式
