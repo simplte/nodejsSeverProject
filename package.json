@@ -20,7 +20,7 @@
     "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "escape-html": "^1.0.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.17.1",
     "helmet": "^3.23.3",
     "lodash.merge": "^4.6.2",
